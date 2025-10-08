@@ -62,3 +62,10 @@ Felix Agustin Peral Garcia - [GitHub](https://github.com/peralgarcia)
 ---
 
 Este portafolio está en desarrollo activo.
+
+## 📄 Licencia
+
+Este proyecto está bajo la licencia **MIT**.  
+Puedes usarlo, modificarlo y compartirlo libremente, siempre que mantengas el aviso de copyright.
+
+> Para más detalles, consulta el archivo [`LICENSE`](./LICENSE).
