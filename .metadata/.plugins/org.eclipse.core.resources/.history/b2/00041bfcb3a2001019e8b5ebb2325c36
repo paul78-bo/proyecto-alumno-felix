@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login - Sistema de Gestión Académica 1</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #7209b7;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 400px;
+            width: 100%;
+            margin: 20px auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .login-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .login-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 25px 20px 20px 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .logo-container {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+        }
+        
+        .corp-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .login-header h2 {
+            margin: 0 0 5px 0;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+        
+        .login-header .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin: 0;
+        }
+        
+        .login-header i {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        
+        .login-body {
+            padding: 30px;
+        }
+        
+        .form-control {
+            border: none;
+            border-bottom: 2px solid #e9ecef;
+            border-radius: 0;
+            padding: 12px 0;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            box-shadow: none;
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .input-group {
+            margin-bottom: 25px;
+        }
+        
+        .input-group-text {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #e9ecef;
+            border-radius: 0;
+            color: #6c757d;
+        }
+        
+        .btn-login {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 12px;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .password-toggle {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .password-toggle:hover {
+            color: var(--primary-color);
+        }
+        
+        .users-demo {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .users-demo h6 {
+            color: var(--dark-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .user-badge {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin: 2px;
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        
+        .floating-label {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .floating-label label {
+            position: absolute;
+            top: 12px;
+            left: 0;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .floating-label input:focus + label,
+        .floating-label input:not(:placeholder-shown) + label {
+            top: -15px;
+            font-size: 0.8rem;
+            color: var(--primary-color);
+        }
+        
+        .corp-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .corp-brand .logo-small {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            object-fit: contain;
+        }
+        
+        .corp-brand .brand-name {
+            font-size: 0.8rem;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="login-container">
+            <div class="login-header">
+                <!-- Logo de la corporación -->
+                <div class="logo-container">
+                    <img src="/images/logo.png" alt="Logo Corporación" class="corp-logo" 
+                         onerror="this.style.display='none'">
+                </div>
+                
+                <i class="fas fa-graduation-cap"></i>
+                <h2>Bienvenido</h2>
+                <p class="subtitle">Sistema de Gestión Académica</p>
+            </div>
+            
+            <div class="login-body">
+                <!-- Marca corporativa pequeña -->
+                <div class="corp-brand">
+                    <img src="/images/logo.png" alt="Logo" class="logo-small"
+                         onerror="this.style.display='none'">
+                    <span class="brand-name">Tu Corporación</span>
+                </div>
+                
+                <form th:action="@{/login}" method="post">
+                    <div class="floating-label">
+                        <input type="text" class="form-control" id="username" name="username" 
+                               placeholder=" " required value="admin">
+                        <label for="username"><i class="fas fa-user me-2"></i>Usuario</label>
+                    </div>
+                    
+                    <div class="floating-label">
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" name="password" 
+                                   placeholder=" " required value="admin123">
+                            <label for="password"><i class="fas fa-lock me-2"></i>Contraseña</label>
+                            <button type="button" class="password-toggle" onclick="togglePassword()">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-login w-100">
+                        <i class="fas fa-sign-in-alt me-2"></i>Ingresar al Sistema
+                    </button>
+                </form>
+                
+                <!-- Mensaje de error -->
+                <div th:if="${error}" class="mt-3 alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <span th:text="${error}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                
+                <!-- Usuarios de demostración -->
+                <div class="users-demo">
+                    <h6><i class="fas fa-users me-2"></i>Usuarios de Prueba</h6>
+                    <div class="mb-2">
+                        <span class="user-badge">admin</span>
+                        <small class="text-muted d-block">Acceso total al sistema</small>
+                    </div>
+                    <div class="mb-2">
+                        <span class="user-badge">profesor</span>
+                        <small class="text-muted d-block">Gestión académica</small>
+                    </div>
+                    <div>
+                        <span class="user-badge">alumno</span>
+                        <small class="text-muted d-block">Consulta de información</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.password-toggle i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+        
+        // Efectos de floating labels
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+                
+                input.addEventListener('blur', function() {
+                    if (this.value === '') {
+                        this.parentElement.classList.remove('focused');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

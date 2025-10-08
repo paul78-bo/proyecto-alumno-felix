@@ -1,0 +1,41 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # Ruta para autenticación (pública)
+        - id: auth-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/auth/**
+        
+        # Ruta para alumnos (protegida) - CORREGIDO
+        - id: alumnos-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/alumnos/**
+          # filters:  ← ELIMINAR esta sección por ahora
+
+        # Ruta existente para users
+        - id: users-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/users/**
+
+# Configuración de CORS para el frontend
+  cors:
+    configurations:
+      '[/**]':
+        allowedOrigins: "http://localhost:8082"
+        allowedMethods: "*"
+        allowedHeaders: "*"
+        allowCredentials: true
+
+# Logs para debugging
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
